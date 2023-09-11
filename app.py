@@ -144,10 +144,10 @@ def top3():
     properties_info = [(property.address, property.price) for property in properties]
     return jsonify(properties_info)
 
-@app.route('/prediction', methods=['GET'])
-def prediction():
+@app.route('/expectation', methods=['GET'])
+def expectation():
     print('Request for prediction page received')
-    return render_template('prediction.html')
+    return render_template('expectation.html')
 
 if __name__ == '__main__':
    app.run(debug=True)
