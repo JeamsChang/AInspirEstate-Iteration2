@@ -1,6 +1,6 @@
 # import libraries
 import os
-import mysql.connector
+import pickle
 from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask,
                    render_template, 
@@ -8,6 +8,10 @@ from flask import (Flask,
                    send_from_directory,
                    jsonify,
                    Response)
+import pandas as pd
+import joblib
+from sklearn.preprocessing import StandardScaler
+
 
 # Create Flask app
 app = Flask(__name__)
@@ -39,7 +43,7 @@ db = SQLAlchemy(app)
 
 # SQLAlchemy ORM definition for Melbourne Housing Data
 class MelbourneHousingData(db.Model):
-    __tablename__ = "melbourne_housing_data"
+    __tablename__ = "melbourne_housing_data_new"
     my_row_id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String)
     suburb = db.Column(db.String)
@@ -49,6 +53,14 @@ class MelbourneHousingData(db.Model):
     latitude = db.Column(db.Double)
     longitude = db.Column(db.Double)
     car = db.Column(db.Integer)
+    type = db.Column(db.String)
+    distance = db.Column(db.Double)
+    postcode = db.Column(db.Integer)
+    landarea = db.Column(db.Double)
+    council = db.Column(db.String)
+    region = db.Column(db.String)
+    state = db.Column(db.String)
+    date = db.Column(db.String)
 
 # index page
 @app.route('/', methods=['GET'])
@@ -93,6 +105,49 @@ def browsing():
                            max_bathroom=max_bathroom, 
                            min_price=min_price, 
                            coordinates=coordinates)
+
+@app.route('/get_types', methods=['GET'])
+def get_types():
+    # Get the selected suburb from the request parameters
+    selectedSuburb = request.args.get('suburb')
+
+    # query available property types for the selected suburb
+    types = db.session.query(MelbourneHousingData.type).filter(MelbourneHousingData.suburb == selectedSuburb).distinct().all()
+    return jsonify([type[0] for type in types])
+
+@app.route('/get_bedrooms', methods=['GET'])
+def get_bedrooms():
+    # Get the selected suburb and type from the request parameters
+    selectedSuburb = request.args.get('suburb')
+    selectedType = request.args.get('type')
+
+    # query available bedrooms for the selected suburb and type
+    bedrooms = db.session.query(MelbourneHousingData.rooms).filter(MelbourneHousingData.suburb == selectedSuburb, MelbourneHousingData.type == selectedType).distinct().all()
+    return jsonify([bedroom[0] for bedroom in bedrooms])
+
+@app.route('/get_bathrooms', methods=['GET'])
+def get_bathrooms():
+    # Get the selected suburb and type from the request parameters
+    selectedSuburb = request.args.get('suburb')
+    selectedType = request.args.get('type')
+    selectedBedrooms = request.args.get('bedroom')
+
+    # query available bathrooms for the selected suburb, type and bedrooms
+    bathrooms = db.session.query(MelbourneHousingData.bathroom).filter(MelbourneHousingData.suburb == selectedSuburb, MelbourneHousingData.type == selectedType, MelbourneHousingData.rooms == selectedBedrooms).distinct().all()
+    return jsonify([bathroom[0] for bathroom in bathrooms])
+
+@app.route('/get_garages', methods=['GET'])
+def get_garages():
+    # Get the selected suburb and type from the request parameters
+    selectedSuburb = request.args.get('suburb')
+    selectedType = request.args.get('type')
+    selectedBedrooms = request.args.get('bedroom')
+    selectedBathrooms = request.args.get('bathroom')
+
+    # query available garages for the selected suburb, type, bedrooms and bathrooms
+    garages = db.session.query(MelbourneHousingData.car).filter(MelbourneHousingData.suburb == selectedSuburb, MelbourneHousingData.type == selectedType, MelbourneHousingData.rooms == selectedBedrooms, MelbourneHousingData.bathroom == selectedBathrooms).distinct().all()
+    return jsonify([garage[0] for garage in garages])
+
 
 # query properties
 @app.route('/browsing_post', methods=['POST'])
@@ -147,7 +202,114 @@ def top3():
 @app.route('/expectation', methods=['GET'])
 def expectation():
     print('Request for prediction page received')
-    return render_template('expectation.html')
+    # update_linear_regression_model()
+    suburbs = db.session.query(MelbourneHousingData.suburb).distinct().order_by(MelbourneHousingData.suburb).all()
+
+
+    return render_template('expectation.html', suburbs=suburbs)
+
+@app.route('/predict', methods=['POST'])
+def predict():
+
+    # Get the request data from the client
+    data = request.json
+    suburb = data['suburb']
+    bedrooms = data['rooms']
+    property_type = data['type']
+    bathrooms = data['bathroom']
+    car_spaces = data['car']
+
+    # Creating a new data
+    new_data = pd.DataFrame({
+        'suburb': [suburb],
+        'rooms': [bedrooms],
+        'type': [property_type],
+        'distance': [0],
+        'bathroom': [bathrooms],
+        'car': [car_spaces],
+        'landarea': [0]
+    })
+
+    # load the model
+    model = joblib.load('ai_model/linear_regression_model.pkl')
+
+    # load the train columns
+    with open('ai_model/train_columns.pkl', 'rb') as file:
+        train_columns = pickle.load(file)
+
+    # Preprocessing the new data in the same way as the training data
+    scaler = joblib.load('ai_model/scaler.bin')
+    new_data = pd.get_dummies(new_data, columns=['suburb', 'type'], drop_first=True).reindex(columns=train_columns, fill_value=0)
+    new_data_scaled = scaler.transform(new_data)
+
+    # Making predictions
+    predicted_price = model.predict(new_data_scaled)[0]
+
+    print(f"Expected Price: ${round(predicted_price)}")
+    return jsonify(round(predicted_price))
+
+
+# update linear regression model in the database
+@app.route('/update_linear_regression_model', methods=['POST'])
+def update_linear_regression_model():
+    # Import joblib
+    import joblib
+    # Execute a query to get data from the table
+    query_result = db.session.query(MelbourneHousingData).all()
+
+ 
+
+
+    # Convert the query result to a dataframe
+    df = pd.DataFrame([(row.suburb, 
+                        row.rooms,
+                        row.type, 
+                        row.price,
+                        row.distance,
+                        row.bathroom,
+                        row.car,
+                        row.landarea
+                        ) for row in query_result], 
+                        columns=['suburb',
+                                 'rooms',
+                                 'type', 
+                                 'price',
+                                 'distance',
+                                 'bathroom',
+                                 'car',
+                                 'landarea',
+                                 ])
+    # One-Hot Encoding of categorical values
+    df = pd.get_dummies(df, columns=['suburb', 'type'], drop_first=True)
+    # Splitting features from label
+    from sklearn.model_selection import train_test_split
+
+    X = df.drop('price', axis=1)
+    with open('ai_model/train_columns.pkl', 'wb') as file:
+        pickle.dump(X.columns, file)
+    y = df['price']
+
+    # Splitting data into training and testing data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Scaling features
+    from sklearn.preprocessing import StandardScaler
+
+    scaler = StandardScaler()
+
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    # Training a linear regression model
+    from sklearn.linear_model import LinearRegression
+    from sklearn.metrics import mean_squared_error
+
+    model = LinearRegression()
+    model.fit(X_train_scaled, y_train)
+    
+    linear_model_path = 'ai_model/linear_regression_model.pkl'
+    joblib.dump(model, linear_model_path)
+    joblib.dump(scaler, 'ai_model/scaler.bin', compress=True)
 
 if __name__ == '__main__':
    app.run(debug=True)

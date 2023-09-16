@@ -114,9 +114,12 @@
                 <label for="select-f4db" class="u-label u-label-1">Suburb</label>
                 <div class="u-form-select-wrapper">
                   <select id="select-f4db" name="select" class="u-border-none u-grey-5 u-input u-input-rectangle u-input-1">
-                    <option value="Item 1" data-calc="">Item 1</option>
-                    <option value="Item 2" data-calc="">Item 2</option>
-                    <option value="Item 3" data-calc="">Item 3</option>
+                    <option value="-">-</option>
+                    {% for suburb in suburbs %}
+                      <option value="{{ suburb.suburb }}">
+                        {{ suburb.suburb }}
+                      </option>
+                    {% endfor %}
                   </select>
                   <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
                 </div>
@@ -125,9 +128,7 @@
                 <label for="select-e41f" class="u-label u-label-2">type</label>
                 <div class="u-form-select-wrapper">
                   <select id="select-e41f" name="select-4" class="u-border-none u-grey-5 u-input u-input-rectangle u-input-2">
-                    <option value="Item 1" data-calc="">Item 1</option>
-                    <option value="Item 2" data-calc="">Item 2</option>
-                    <option value="Item 3" data-calc="">Item 3</option>
+
                   </select>
                   <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
                 </div>
@@ -136,9 +137,7 @@
                 <label for="select-bc39" class="u-label u-label-3">bedroom</label>
                 <div class="u-form-select-wrapper">
                   <select id="select-bc39" name="select-1" class="u-border-none u-grey-5 u-input u-input-rectangle u-input-3">
-                    <option value="Item 1" data-calc="">Item 1</option>
-                    <option value="Item 2" data-calc="">Item 2</option>
-                    <option value="Item 3" data-calc="">Item 3</option>
+                    <option id="bedroom-option" data-calc=""></option>
                   </select>
                   <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
                 </div>
@@ -147,9 +146,7 @@
                 <label for="select-f3b2" class="u-label u-label-4">bathroom</label>
                 <div class="u-form-select-wrapper">
                   <select id="select-f3b2" name="select-2" class="u-border-none u-grey-5 u-input u-input-rectangle u-input-4">
-                    <option value="Item 1" data-calc="">Item 1</option>
-                    <option value="Item 2" data-calc="">Item 2</option>
-                    <option value="Item 3" data-calc="">Item 3</option>
+                    <option id="bathroom-option" data-calc=""></option>
                   </select>
                   <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
                 </div>
@@ -158,90 +155,42 @@
                 <label for="select-b369" class="u-label u-label-5">Garage</label>
                 <div class="u-form-select-wrapper">
                   <select id="select-b369" name="select-3" class="u-border-none u-grey-5 u-input u-input-rectangle u-input-5">
-                    <option value="Item 1" data-calc="">Item 1</option>
-                    <option value="Item 2" data-calc="">Item 2</option>
-                    <option value="Item 3" data-calc="">Item 3</option>
+                    <option id="garage-option" data-calc=""></option>
                   </select>
                   <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" style="fill:currentColor;" xml:space="preserve"><polygon class="st0" points="8,12 2,4 14,4 "></polygon></svg>
                 </div>
               </div>
               <div class="u-align-right u-form-group u-form-submit u-label-top">
-                <input type="submit" value="submit" class="u-form-control-hidden">
-                <a href="#" class="u-active-palette-3-base u-border-active-palette-3-base u-border-hover-palette-3-base u-border-none u-btn u-btn-submit u-button-style u-hover-palette-3-base u-palette-2-base u-btn-1">Submit</a>
+                <button id="search-button" type="button" class="u-active-palette-3-base u-border-active-palette-3-base u-border-hover-palette-3-base u-border-none u-btn u-btn-submit u-button-style u-hover-palette-3-base u-palette-2-base u-btn-1">
+                <a  href="#" >
+                  Submit
+                </a>
+                </button>
               </div>
-              <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-              <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
-              <input type="hidden" value="" name="recaptchaResponse">
-              <input type="hidden" name="formServices" value="8f050fa9-4480-2824-ed96-472f0c71c9c1">
             </form>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section class="u-align-center u-clearfix u-grey-5 u-section-2" id="carousel_4031">
+
+
+  <section class="u-clearfix u-grey-5 u-section-2" id="carousel_ec54">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <h2 class="u-text u-text-1">your budget expectation</h2>
-      <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
-        <div class="u-layout">
-          <div class="u-layout-col">
-            <div class="u-size-30">
-              <div class="u-layout-row">
-                <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-15 u-size-30-md u-layout-cell-1" data-animation-name="jackInTheBox" data-animation-duration="1000" data-animation-direction="">
-                  <div class="u-container-layout u-valign-top u-container-layout-1"><span class="u-file-icon u-icon u-icon-1"><img src="static/images/6213869.png" alt=""></span>
-                    <h6 class="u-text u-text-2">minimum</h6>
-                    <p class="u-text u-text-3">AU$</p>
-                  </div>
-                </div>
-                <div class="u-align-center u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-2" data-animation-name="jackInTheBox" data-animation-duration="1000" data-animation-direction="">
-                  <div class="u-container-layout u-valign-top u-container-layout-2"><span class="u-file-icon u-icon u-icon-2"><img src="static/images/3713681.png" alt=""></span>
-                    <h6 class="u-text u-text-4">median</h6>
-                    <p class="u-text u-text-5">AU$</p>
-                  </div>
-                </div>
-                <div class="u-container-style u-layout-cell u-size-15 u-size-30-md u-layout-cell-3" data-animation-name="jackInTheBox" data-animation-duration="1000" data-animation-direction="">
-                  <div class="u-container-layout u-valign-top u-container-layout-3"><span class="u-file-icon u-icon u-icon-3"><img src="static/images/10987785.png" alt=""></span>
-                    <h6 class="u-align-center u-text u-text-6">average</h6>
-                    <p class="u-align-center u-text u-text-7">AU$</p>
-                  </div>
-                </div>
-                <div class="u-container-style u-layout-cell u-right-cell u-size-15 u-size-30-md u-layout-cell-4" data-animation-name="jackInTheBox" data-animation-duration="1000" data-animation-direction="">
-                  <div class="u-container-layout u-valign-top u-container-layout-4"><span class="u-file-icon u-icon u-icon-4"><img src="static/images/4514986.png" alt=""></span>
-                    <h6 class="u-align-center u-text u-text-8">maximum</h6>
-                    <p class="u-align-center u-text u-text-9">AU$</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="u-size-30">
-              <div class="u-layout-row">
-                <div class="u-size-30">
-                  <div class="u-layout-col">
-                    <div class="u-container-style u-layout-cell u-left-cell u-size-60 u-layout-cell-5">
-                      <div class="u-container-layout u-valign-top u-container-layout-5">
-                        <h3 class="u-text u-text-default u-text-10"> Historical price variations</h3>
-                        <div class="u-container-style u-expanded-width u-grey-10 u-group u-group-1">
-                          <div class="u-container-layout u-container-layout-6"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="u-size-30">
-                  <div class="u-layout-col">
-                    <div class="u-container-style u-layout-cell u-right-cell u-size-60 u-layout-cell-6">
-                      <div class="u-container-layout u-valign-top u-container-layout-7">
-                        <h3 class="u-text u-text-default u-text-11"> Neighboring Areas</h3>
-                        <div class="u-expanded-width u-grey-light-2 u-map u-map-1">
-                          <div class="embed-responsive">
-                            <iframe class="embed-responsive-item" src="//maps.google.com/maps?output=embed&amp;q=Manhattan%2C%20New%20York&amp;z=10&amp;t=m" data-map="JTdCJTIyYWRkcmVzcyUyMiUzQSUyMk1hbmhhdHRhbiUyQyUyME5ldyUyMFlvcmslMjIlMkMlMjJ6b29tJTIyJTNBMTAlMkMlMjJ0eXBlSWQlMjIlM0ElMjJyb2FkJTIyJTJDJTIybGFuZyUyMiUzQSUyMiUyMiU3RA=="></iframe>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div class="u-container-style u-expanded-width u-group u-radius-20 u-shape-round u-white u-group-1">
+        <div class="u-container-layout u-container-layout-1">
+          <h2 class="u-align-left u-text u-text-default u-text-1">AI Budget expectation</h2>
+          <h2 id="predict-price" class="infinite u-align-center u-custom-font u-font-montserrat u-text u-text-palette-2-dark-1 u-text-2" data-animation-name="tada" data-animation-duration="1000" data-animation-direction=""></h2>
+          <div class="u-align-center u-container-style u-grey-10 u-group u-group-2">
+            <div class="u-container-layout">
+              <span class="u-file-icon u-icon u-icon-1"><img src="{{ url_for('static', filename='images/2642358.png')}}" alt=""></span>
+              <span class="u-file-icon u-icon u-icon-2"><img src="{{ url_for('static', filename='images/405121.png')}}" alt=""></span>
+              <span class="u-file-icon u-icon u-icon-3"><img src="{{ url_for('static', filename='images/887184.png')}}" alt="">
+              </span><span class="u-file-icon u-icon u-icon-4"><img src="{{ url_for('static', filename='images/2590601.png')}}" alt=""></span>
+              <p class="u-text u-text-3">2</p>
+              <p class="u-text u-text-4">2</p>
+              <p class="u-text u-text-5">2</p>
+              <p class="u-text u-text-6">2</p>
             </div>
           </div>
         </div>
@@ -282,5 +231,149 @@
     </div>
   </footer>
 
+  <script>
+    // Element id
+    const suburb_id = "select-f4db";
+    const type_id = "select-e41f";
+    const bedroom_id = "select-bc39";
+    const bathroom_id = "select-f3b2";
+    const garage_id = "select-b369";
+
+    // Elements for taking the user's input
+    const suburbDropdown = document.getElementById(suburb_id);
+    const typeDropdown = document.getElementById(type_id);
+    const bedroomDropdown = document.getElementById(bedroom_id);
+    const bathroomDropdown = document.getElementById(bathroom_id);
+    const garageDropdown = document.getElementById(garage_id);
+
+    // Update the dropdown options
+    function updateDropdownOptions(element_id, options) {
+      let dropdown = document.getElementById(element_id)
+      dropdown.innerHTML = '<option>-</option>';
+      options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.textContent = option;
+        dropdown.appendChild(optionElement);
+      });
+    }
+
+    // Get the default suburb value
+    let selectedSuburb = suburbDropdown.value;
+    console.log(selectedSuburb);
+
+    // dynamic update the type list
+    "change onload".split(" ").forEach(function(e){
+      suburbDropdown.addEventListener(e, async function() {
+        // Get the selected suburb value
+        selectedSuburb = suburbDropdown.value;
+        console.log(selectedSuburb);
+
+        // Get the types for the selected suburb
+        fetch(`/get_types?suburb=${selectedSuburb}`)
+          .then(response => response.json())
+          .then(data => {
+            updateDropdownOptions(type_id, data);
+          })
+          .catch(error => {
+            console.error('Error fetching types:', error);
+          });
+      });
+    });
+
+    // dynamic update the bedroom list
+    "change onload".split(" ").forEach(function(e){
+      typeDropdown.addEventListener(e, async function() {
+        // Get the selected suburb and type value
+        selectedType = typeDropdown.value;
+        selectedSuburb = suburbDropdown.value;
+        console.log(selectedSuburb, selectedType);
+
+        // Get the bedrooms for the selected type
+        fetch(`/get_bedrooms?suburb=${selectedSuburb}&type=${selectedType}`)
+          .then(response => response.json())
+          .then(data => {
+            updateDropdownOptions(bedroom_id, data);
+          })
+          .catch(error => {
+            console.error('Error fetching bedrooms:', error);
+          });
+      });
+    });
+
+    // dynamic update the bathroom list
+    bedroomDropdown.addEventListener("change", async function() {
+      // Get the selected suburb, type and bedroom value
+      selectedType = typeDropdown.value;
+      selectedSuburb = suburbDropdown.value;
+      selectedBedroom = bedroomDropdown.value;
+      console.log(selectedSuburb, selectedType, selectedBedroom);
+
+      // Get the bathrooms for the selected type
+      fetch(`/get_bathrooms?suburb=${selectedSuburb}&type=${selectedType}&bedroom=${selectedBedroom}`)
+        .then(response => response.json())
+        .then(data => {
+          updateDropdownOptions(bathroom_id, data);
+        })
+        .catch(error => {
+          console.error('Error fetching bathrooms:', error);
+        });
+    });
+
+    // dynamic update the garage list
+    bathroomDropdown.addEventListener("change", async function() {
+      // Get the selected suburb, type, bedroom and bathroom value
+      selectedType = typeDropdown.value;
+      selectedSuburb = suburbDropdown.value;
+      selectedBedroom = bedroomDropdown.value;
+      selectedBathroom = bathroomDropdown.value;
+      console.log(selectedSuburb, selectedType, selectedBedroom, selectedBathroom);
+
+      // Get the garages for the selected type
+      fetch(`/get_garages?suburb=${selectedSuburb}&type=${selectedType}&bedroom=${selectedBedroom}&bathroom=${selectedBathroom}`)
+        .then(response => response.json())
+        .then(data => {
+          updateDropdownOptions(garage_id, data);
+        })
+        .catch(error => {
+          console.error('Error fetching garages:', error);
+        });
+    });
+
+
+  
+
+    // When the user clicks the search button
+    document.getElementById("search-button").addEventListener("click", async function() {
+      
+      // Get the user's selected parameters
+      var selectedSuburb = document.getElementById("select-f4db").value;
+      var selectedType = document.getElementById("select-e41f").value;
+      var selectedBedrooms = document.getElementById("select-bc39").value;
+      var selectedBathrooms = document.getElementById("select-f3b2").value;
+      var selectedGarage = document.getElementById("select-b369").value;
+
+      // get the prediction
+      let res = await fetch ("{{url_for('predict')}}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "suburb": selectedSuburb,
+          "type": selectedType,
+          "rooms": selectedBedrooms,
+          "bathroom": selectedBathrooms,
+          "car": selectedGarage
+        })
+      })
+
+      // get the response
+      let expectation = await res.json();
+      console.log(expectation);
+      var predict_price = document.getElementById("predict-price");
+      predict_price.textContent = expectation;
+    });
+  </script>
 </body>
 </html>
