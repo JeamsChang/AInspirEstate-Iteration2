@@ -187,10 +187,10 @@
               <span class="u-file-icon u-icon u-icon-2"><img src="{{ url_for('static', filename='images/405121.png')}}" alt=""></span>
               <span class="u-file-icon u-icon u-icon-3"><img src="{{ url_for('static', filename='images/887184.png')}}" alt="">
               </span><span class="u-file-icon u-icon u-icon-4"><img src="{{ url_for('static', filename='images/2590601.png')}}" alt=""></span>
-              <p class="u-text u-text-3">2</p>
-              <p class="u-text u-text-4">2</p>
-              <p class="u-text u-text-5">2</p>
-              <p class="u-text u-text-6">2</p>
+              <p id="type" class="u-text u-text-3">-</p>
+              <p id="num_car" class="u-text u-text-4">-</p>
+              <p id="num_bathroom" class="u-text u-text-5">-</p>
+              <p id="num_bedroom" class="u-text u-text-6">-</p>
             </div>
           </div>
         </div>
@@ -367,6 +367,24 @@
           "car": selectedGarage
         })
       })
+
+      var num_bedroom = document.getElementById("num_bedroom");
+      var num_bathroom = document.getElementById("num_bathroom");
+      var num_car = document.getElementById("num_car");
+      var type = document.getElementById("type");
+      num_bedroom.textContent = selectedBedrooms;
+      num_bathroom.textContent = selectedBathrooms;
+      num_car.textContent = selectedGarage;
+      if (selectedType == "h") {
+        selectedType = "house";
+      } else if (selectedType == "u") {
+        selectedType = "unit";
+      } else if (selectedType == "t") {
+        selectedType = "townhouse";
+      } else {
+        selectedType = "unknown";
+      }
+      type.textContent = selectedType;
 
       // get the response
       let expectation = await res.json();
