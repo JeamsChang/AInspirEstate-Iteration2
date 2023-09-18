@@ -175,7 +175,7 @@
   </section>
 
 
-  <section class="u-clearfix u-grey-5 u-section-2" id="carousel_ec54">
+  <section id = "section-2" class="u-clearfix u-grey-5 u-section-2" id="carousel_ec54">
     <div class="u-clearfix u-sheet u-sheet-1">
       <div class="u-container-style u-expanded-width u-group u-radius-20 u-shape-round u-white u-group-1">
         <div class="u-container-layout u-container-layout-1">
@@ -185,13 +185,13 @@
             <div class="u-container-layout u-container-layout-2">
               <div class="u-expanded u-grey-light-2 u-map">
                 <div class="embed-responsive">
-                  <div id="map-container" style="width: 100%; height: 100%; margin: 0 auto;"></div>
+                  <div id="map-container" style="width: 100%; height: 100%; margin: 0 auto; z-index: 1;"></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="u-align-center u-container-style u-grey-25 u-group u-opacity u-opacity-60 u-shape-rectangle u-group-3">
-            <div class="u-container-layout u-container-layout-3">
+            <div class="u-container-layout u-container-layout-3" style=" z-index: 2;">
               <div class="u-clearfix u-group-elements u-group-elements-1">
                 <span class="u-file-icon u-icon u-icon-1"><img src="{{ url_for('static', filename='images/2590601.png')}}" alt=""></span>
                 <span class="u-file-icon u-icon u-icon-2"><img src="{{ url_for('static', filename='images/405121.png')}}" alt=""></span>
@@ -263,12 +263,30 @@
     // Update the dropdown options
     function updateDropdownOptions(element_id, options) {
       let dropdown = document.getElementById(element_id);
-      options.forEach(option => {
-        const optionElement = document.createElement('option');
-        optionElement.value = option;
-        optionElement.textContent = option;
-        dropdown.appendChild(optionElement);
-      });
+      if (element_id == "select-e41f"){
+        options.forEach(option => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option;
+          if (option == "h") {
+            optionElement.textContent = "house";
+          } else if (option == "u") {
+            optionElement.textContent = "unit";
+          } else if (option == "t") {
+            optionElement.textContent = "townhouse";
+          } else {
+            optionElement.textContent = "unknown";
+          }
+          dropdown.appendChild(optionElement);
+        });
+      } else {
+        options.forEach(option => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option;
+          optionElement.textContent = option;
+          dropdown.appendChild(optionElement);
+        });
+      }
+      
     }
 
     // Get the default suburb value
@@ -408,10 +426,10 @@
       return 'AU$' + formattedAmount;
     }
 
-// 示例用法
+
 const amount = 1234567.89;
 const formattedAmount = formatCurrency(amount);
-console.log(formattedAmount); // 输出：AU$1,234,568
+console.log(formattedAmount);
 
     // When the user clicks the search button
     document.getElementById("search-button").addEventListener("click", async function() {
@@ -473,7 +491,7 @@ console.log(formattedAmount); // 输出：AU$1,234,568
       highlightAndCenterSuburb(selectedSuburb);
 
       // Scroll to the map
-      document.getElementById("predict-price").scrollIntoView({behavior: "smooth"});
+      document.getElementById("section-2").scrollIntoView({behavior: "smooth"});
     });
   </script>
 </body>
