@@ -248,6 +248,10 @@ def predict_price():
     print(f"Expected Price: ${round(predicted_price)}")
     return jsonify(round(predicted_price))
 
+@app.route('/intervention', methods=['GET'])
+def intervention():
+    print('Request for intervention page received')
+    return render_template('intervention.html')
 
 # update linear regression model in the database
 @app.route('/update_linear_regression_model', methods=['POST'])
