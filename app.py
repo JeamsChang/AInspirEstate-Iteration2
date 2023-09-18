@@ -204,8 +204,6 @@ def prediction():
     print('Request for prediction page received')
     # update_linear_regression_model()
     suburbs = db.session.query(MelbourneHousingData.suburb).distinct().order_by(MelbourneHousingData.suburb).all()
-
-
     return render_template('prediction.html', suburbs=suburbs)
 
 @app.route('/predict_price', methods=['POST'])
@@ -252,6 +250,12 @@ def predict_price():
 def intervention():
     print('Request for intervention page received')
     return render_template('intervention.html')
+
+@app.route('/demand', methods=['GET'])
+def demand():
+    print('Request for demand page received')
+    suburbs = db.session.query(MelbourneHousingData.suburb).distinct().order_by(MelbourneHousingData.suburb).all()
+    return render_template('demand.html', suburbs=suburbs)
 
 # update linear regression model in the database
 @app.route('/update_linear_regression_model', methods=['POST'])

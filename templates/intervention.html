@@ -71,15 +71,15 @@
                 </a>
               </li>
               <li class="u-nav-item">
-                <a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="{{ url_for('prediction') }}" style="padding: 10px 20px;">
+                <a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="{{ url_for('demand') }}" style="padding: 10px 20px;">
                   demand
                 </a>
               </li>
-              <li class="u-nav-item">
-                <a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="{{ url_for('prediction') }}" style="padding: 10px 20px;">
+              <!-- <li class="u-nav-item">
+                <a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="{{ url_for('intervention') }}" style="padding: 10px 20px;">
                   intervention
                 </a>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
@@ -103,15 +103,15 @@
                     </a>
                   </li>
                   <li class="u-nav-item">
-                    <a class="u-button-style u-nav-link" href="{{ url_for('prediction') }}">
+                    <a class="u-button-style u-nav-link" href="{{ url_for('demand') }}">
                       Demand
                     </a>
                   </li>
-                  <li class="u-nav-item">
-                    <a class="u-button-style u-nav-link" href="{{ url_for('prediction') }}">
+                  <!-- <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link" href="{{ url_for('intervention') }}">
                       Intervention
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </div>
@@ -153,21 +153,21 @@
                 <div class="u-form-group u-form-number u-form-number-layout-range-number u-form-group-1">
                   <label for="range-b628" class="u-label u-text-body-color u-label-1">Education Level</label>
                   <div class="u-input-row" data-value="0">
-                    <input value="0" min="-50" max="50" step="10" type="range" placeholder="" id="range-b628" name="education_level" class="u-input u-range u-text-body-color" autofocus="autofocus">
+                    <input value="0" min="-50" max="50" step="10" type="range" placeholder="" id="range-b628" name="education_level" class="u-input u-range u-text-body-color">
                     <input type="number" placeholder="" id="number-range-b628" class="u-border-2 u-border-grey-75 u-grey-5 u-input u-input-rectangle u-radius-10 u-input-2" min="-50" max="50" step="10" value="0" name="education_level">
                   </div>
                 </div>
                 <div class="u-form-group u-form-number u-form-number-layout-range-number u-form-group-2">
                   <label for="range-13f0" class="u-label u-text-body-color u-label-2">Income Level</label>
                   <div class="u-input-row" data-value="0">
-                    <input value="0" min="-50" max="50" step="10" type="range" placeholder="" id="range-13f0" name="income_level" class="u-input u-range" autofocus="autofocus">
+                    <input value="0" min="-50" max="50" step="10" type="range" placeholder="" id="range-13f0" name="income_level" class="u-input u-range">
                     <input type="number" placeholder="" id="number-range-13f0" class="u-border-2 u-border-grey-75 u-grey-5 u-input u-input-rectangle u-radius-10 u-input-4" min="-50" max="50" step="10" value="0" name="income_level">
                   </div>
                 </div>
                 <div class="u-form-group u-form-number u-form-number-layout-range-number u-form-group-3">
                   <label for="range-3785" class="u-label u-text-body-color u-label-3">Age Level</label>
                   <div class="u-input-row" data-value="0">
-                    <input value="0" min="-50" max="50" step="10" type="range" placeholder="" id="range-3785" name="age_level" class="u-input u-range" autofocus="autofocus">
+                    <input value="0" min="-50" max="50" step="10" type="range" placeholder="" id="range-3785" name="age_level" class="u-input u-range">
                     <input type="number" placeholder="" id="number-range-3785" class="u-border-2 u-border-grey-75 u-grey-5 u-input u-input-rectangle u-radius-10 u-input-6" min="-50" max="50" step="10" value="0" name="age_level">
                   </div>
                 </div>
