@@ -265,9 +265,6 @@ def update_linear_regression_model():
     # Execute a query to get data from the table
     query_result = db.session.query(MelbourneHousingData).all()
 
- 
-
-
     # Convert the query result to a dataframe
     df = pd.DataFrame([(row.suburb, 
                         row.rooms,
