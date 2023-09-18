@@ -9,6 +9,7 @@ from flask import (Flask,
                    jsonify,
                    Response)
 import pandas as pd
+import plotly.express as px
 import joblib
 from sklearn.preprocessing import StandardScaler
 
@@ -246,6 +247,8 @@ def predict_price():
     print(f"Expected Price: ${round(predicted_price)}")
     return jsonify(round(predicted_price))
 
+
+
 @app.route('/intervention', methods=['GET'])
 def intervention():
     print('Request for intervention page received')
@@ -315,6 +318,71 @@ def update_linear_regression_model():
     linear_model_path = 'ai_model/linear_regression_model.pkl'
     joblib.dump(model, linear_model_path)
     joblib.dump(scaler, 'ai_model/scaler.bin', compress=True)
+
+@app.route('/market_demand', methods=['POST'])
+def market_demand():
+    # Get the request data from the client
+    data = request.json
+    suburb = data['suburb']
+    # Execute a query to get properties from the table for the selected suburb
+    query_result = db.session.query(MelbourneHousingData).filter(MelbourneHousingData.suburb == suburb).all()
+    # Convert the query result to a dataframe
+    df = pd.DataFrame([(row.suburb,
+                        row.address,
+                        row.date) for row in query_result],
+                        columns=['Suburb',
+                                    'Address',
+                                    'Date',
+                                    ])
+    # Convert 'Date' column to datetime format
+    df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%Y')
+    
+    # Extract month and year from 'Date' column
+    df['Year'] = df['Date'].dt.year
+    df['Month'] = df['Date'].dt.month
+
+    # Group by month number and year to count the number of sales
+    sales_per_month = df.groupby(['Year', 'Month']).size().reset_index(name='Number of Sales')
+
+    # Map month numbers to month names
+    month_map = {
+        1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June',
+        7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'
+    }
+    sales_per_month['Month_Name'] = sales_per_month['Month'].map(month_map)
+
+    # Create a bar chart with Plotly
+    fig = px.line(sales_per_month, x='Month_Name', y='Number of Sales', color='Year', 
+             title='Number of Sales per Month', 
+             labels={'Month_Name': 'Month', 'Number of Sales': 'Number of Sales'},
+             category_orders={"Month_Name": list(month_map.values())})
+    
+    # Set y-axis to display only whole numbers and adjust margin for x-axis
+    max_sales = sales_per_month['Number of Sales'].max()
+    fig.update_layout(yaxis=dict(tickvals=list(range(0, max_sales+1))))
+
+    # Group by year to get total sales for each year
+    total_sales_per_year = df.groupby('Year').size().reset_index(name='Total Sales')
+
+    # Calculate the percentage change from the previous year
+    total_sales_per_year['Percentage Change'] = round(total_sales_per_year['Total Sales'].pct_change() * 100, 2)
+
+    # Create a new column for the year interval representation
+    total_sales_per_year['Year Interval'] = (total_sales_per_year['Year'] - 1).astype(str) + '-' + total_sales_per_year['Year'].astype(str)
+
+    # Drop the first row since we don't have percentage change data for the first year
+    total_sales_per_year = total_sales_per_year.dropna()
+
+    return jsonify({'sales_per_month': fig.to_json(), 'total_sales_per_year': total_sales_per_year.to_json(orient='records')})
+    
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
    app.run(debug=True)
