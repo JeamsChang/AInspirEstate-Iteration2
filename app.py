@@ -199,17 +199,17 @@ def top3():
     properties_info = [(property.address, property.price) for property in properties]
     return jsonify(properties_info)
 
-@app.route('/expectation', methods=['GET'])
-def expectation():
+@app.route('/prediction', methods=['GET'])
+def prediction():
     print('Request for prediction page received')
     # update_linear_regression_model()
     suburbs = db.session.query(MelbourneHousingData.suburb).distinct().order_by(MelbourneHousingData.suburb).all()
 
 
-    return render_template('expectation.html', suburbs=suburbs)
+    return render_template('prediction.html', suburbs=suburbs)
 
-@app.route('/predict', methods=['POST'])
-def predict():
+@app.route('/predict_price', methods=['POST'])
+def predict_price():
 
     # Get the request data from the client
     data = request.json

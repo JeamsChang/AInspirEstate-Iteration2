@@ -1,4 +1,4 @@
-.u-section-1 {
+ .u-section-1 {
   background-image: url("https://assets.nicepagecdn.com/11a8ddce/2283411/images/pexels-photo-325185.jpeg");
   background-position: 50% 50%;
 }
@@ -14,10 +14,10 @@
 .u-section-1 .u-form-1 {
   height: 550px;
   background-image: none;
-  --thumb-color: #73a3de;
-  --thumb-hover-color: #4c637f;
+  --thumb-color: #478ac9;
+  --thumb-hover-color: #a35559;
   --track-color: #c0c0c0;
-  --track-active-color: #73a3de;
+  --track-active-color: #478ac9;
   box-shadow: 2px 2px 8px 0px rgba(128,128,128,1);
   margin: 30px 481px 60px 0;
 }
@@ -210,6 +210,7 @@
 .u-section-2 .u-table-cell-4 {
   border-style: solid;
   text-transform: uppercase;
+  font-weight: normal;
 }
 
 .u-section-2 .u-table-cell-5 {
@@ -223,6 +224,7 @@
 .u-section-2 .u-table-cell-7 {
   border-style: solid;
   text-transform: uppercase;
+  font-weight: normal;
 }
 
 .u-section-2 .u-table-cell-8 {
@@ -236,6 +238,7 @@
 .u-section-2 .u-table-cell-10 {
   border-style: solid;
   text-transform: uppercase;
+  font-weight: normal;
 }
 
 .u-section-2 .u-table-cell-11 {
@@ -345,9 +348,7 @@
   .u-section-2 .u-layout-cell-3 {
     min-height: 269px;
   }
-}
-
-.u-section-3 .u-sheet-1 {
+}.u-section-3 .u-sheet-1 {
   min-height: 739px;
 }
 
